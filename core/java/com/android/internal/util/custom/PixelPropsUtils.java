@@ -59,7 +59,8 @@ public class PixelPropsUtils {
             "com.android.chrome",
             "com.android.vending",
             "com.breel.wallpapers20",
-            "com.nothing.smartcenter"
+            "com.nothing.smartcenter",
+            "com.netflix.mediaclient"
     };
 
     private static final String[] packagesToKeep = {
@@ -143,6 +144,10 @@ public class PixelPropsUtils {
 
             if (packageName.equals("com.google.android.apps.photos")) {
                 propsToChange.putAll(propsToChangePixelXL);
+            } else if (packageName.equals("com.netflix.mediaclient") &&
+                        !SystemProperties.getBoolean("persist.sys.pixelprops.netflix", true)) {
+                    if (DEBUG) Log.d(TAG, "Netflix spoofing disabled by system prop");
+                    return;
             } else if (packageName.equals("com.android.vending")) {
                 sIsFinsky = true;
                 return;
