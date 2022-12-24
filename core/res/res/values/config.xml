@@ -5908,4 +5908,8 @@
          TODO(b/236022708) Move rear display state to device state config file
     -->
     <integer name="config_deviceStateRearDisplay">-1</integer>
+
+    <!-- Device model (Build.MODEL) to spoof for netflix, if not empty -->
+    <string name="config_netflixSpoofModel" translatable="false"></string>
+
 </resources>
