@@ -6024,4 +6024,8 @@
     <!-- Whether the lock screen is allowed to run its own live wallpaper,
          different from the home screen wallpaper. -->
     <bool name="config_independentLockscreenLiveWallpaper">false</bool>
+
+    <!-- Device model (Build.MODEL) to spoof for netflix, if not empty -->
+    <string name="config_netflixSpoofModel" translatable="false"></string>
+
 </resources>

@@ -4879,4 +4879,7 @@
   <java-symbol type="id" name="language_picker_header" />
 
   <java-symbol type="dimen" name="status_bar_height_default" />
+
+    <!-- Device model (Build.MODEL) to spoof for netflix, if not empty -->
+    <java-symbol type="string" name="config_netflixSpoofModel" />
 </resources>

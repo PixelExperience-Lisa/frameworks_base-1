@@ -18,9 +18,12 @@
 package com.android.internal.util.custom;
 
 import android.app.Application;
+import android.content.res.Resources;
 import android.os.Build;
 import android.os.SystemProperties;
 import android.util.Log;
+
+import com.android.internal.R;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -36,6 +39,7 @@ public class PixelPropsUtils {
     private static final boolean DEBUG = false;
 
     private static final String SAMSUNG = "com.samsung.";
+    private static final String PACKAGE_NETFLIX = "com.netflix.mediaclient";
 
     private static final Map<String, Object> propsToChangeGeneric;
     private static final Map<String, Object> propsToChangePixel5;
@@ -102,6 +106,9 @@ public class PixelPropsUtils {
     private static volatile boolean sIsGms = false;
     private static volatile boolean sIsFinsky = false;
 
+    private static final String sNetflixModel =
+            Resources.getSystem().getString(R.string.config_netflixSpoofModel);
+
     static {
         propsToKeep = new HashMap<>();
         propsToKeep.put("com.google.android.settings.intelligence", new ArrayList<>(Collections.singletonList("FINGERPRINT")));
@@ -161,7 +168,10 @@ public class PixelPropsUtils {
             } else if (packageName.equals("com.android.vending")) {
                 sIsFinsky = true;
                 return;
-            } else if (!isPixelDevice) {
+            } else if (!sNetflixModel.isEmpty() && packageName.equals(PACKAGE_NETFLIX)) {
+                dlog("Setting model to " + sNetflixModel + " for Netflix");
+                setPropValue("MODEL", sNetflixModel);
+            } else {
                 if ((Arrays.asList(packagesToChangePixel7Pro).contains(packageName))) {
                     propsToChange.putAll(propsToChangePixel7Pro);
                 } else if (Arrays.asList(packagesToChangePixelXL).contains(packageName)) {
@@ -238,5 +248,9 @@ public class PixelPropsUtils {
             Log.i(TAG, "Blocked key attestation sIsGms=" + sIsGms + " sIsFinsky=" + sIsFinsky);
             throw new UnsupportedOperationException();
         }
+    }
+
+    private static void dlog(String msg) {
+      if (DEBUG) Log.d(TAG, msg);
     }
 }
